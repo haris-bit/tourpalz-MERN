@@ -59,8 +59,13 @@ const Register = () => {
     formData.append("location", location);
     formData.append("profileType", profileType);
     formData.append("profilePicture", profilePicture);
+    console.log(formData);
 
-    axios.post("https://tourpalz-backend.vercel.app/register", formData)
+    axios.post("http://localhost:3001/register", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
       .then((response) => {
         console.log(response.data);
         toast.success("User registered successfully");

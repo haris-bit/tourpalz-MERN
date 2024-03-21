@@ -28,13 +28,13 @@ const LoginPage = () => {
     form.append("password", password);
     form.append("profileType", profileType);
 
-    axios.post("https://tourpalz-backend.vercel.app/login", form, {
+    axios.post("http://localhost:3001/login", form, {
       headers: {
         "Content-Type": 'application/json'
       }
     }).then((res) => {
       if (res.data.error) {
-        alert(res.data.error);
+        toast.error("Invalid Credentials");
       } else {
         localStorage.setItem("email", email);
         localStorage.setItem("profileType", profileType);

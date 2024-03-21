@@ -9,6 +9,7 @@ import GuideBookedTours from '../pages/GuideBookedTours/page';
 // import MessageTravelers from '../pages/MessageTravelers/page';
 import TourGuideReviews from '../pages/TourGuideReviews/page';
 import TourGuideChatComponent from '../pages/TourGuideChatComponent/page';
+import Link from 'next/link';
 
 const TourGuideProfilePage = () => {
     const [activeTab, setActiveTab] = useState('profile');
@@ -47,7 +48,11 @@ const TourGuideProfilePage = () => {
 
     return (
         <div className="flex flex-col items-center h-full bg-gray-100 py-4">
+            <Link
+                href={'/home'}
+            >
             <Image src={'/logo.png'} alt="logo" width={200} height={200} />
+            </Link>
             <div className="p-8 rounded-lg shadow-md w-full max-w-full h-full">
                 <h1 className="text-2xl font-bold mb-4">Tour Guide Profile</h1>
                 <div className="flex mb-4 justify-between">

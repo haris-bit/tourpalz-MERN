@@ -7,9 +7,6 @@ import axios from "axios";
 import Image from "next/image";
 
 const TravelerProfileSection = () => {
-  // get email from local storage
-  const email = localStorage.getItem("email");
-  console.log(email);
   const [profile, setProfile] = useState({
     username: "John",
     email: "john.doe@example.com",
@@ -40,6 +37,9 @@ const TravelerProfileSection = () => {
   };
 
   useEffect(() => {
+    // get email from local storage
+    const email = localStorage.getItem("email");
+    console.log(email);
     axios
       .get(`http://localhost:3001/users/${email}`)
       .then((res) => {

@@ -136,9 +136,10 @@ const Navbar = () => {
               src={profilePicture}
               alt={"Profile"}
               width={40}
-              height={40}
+              height={20}
               className="rounded-full
-              object-cover
+              object-fit 
+              w-12 h-12
               "
             />
             <FaSignOutAlt
