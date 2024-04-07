@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaUser,
   FaEnvelope,
@@ -23,9 +23,19 @@ import CancelBookings from "../pages/CancelBookings/page";
 import LeaveReviews from "../pages/LeaveReview/page";
 import TravelerChatComponent from "../pages/TravelerChatComponent/page";
 import Link from "next/link";
+import { useSearchParams } from 'next/navigation';
+
 
 const TravelerProfilePage = () => {
   const [activeTab, setActiveTab] = useState("profile");
+  const searchParams = useSearchParams();
+  const guideName = searchParams.get('guideName');
+
+  useEffect(() => {
+    if (guideName) {
+      setActiveTab("messageTourGuides");
+    }
+  }, [guideName]);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -52,7 +62,7 @@ const TravelerProfilePage = () => {
       case "messageTourGuides":
         return (
           <div>
-            <TravelerChatComponent />
+            <TravelerChatComponent guideName={guideName} />
           </div>
         );
       case "cancelBookings":

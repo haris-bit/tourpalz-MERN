@@ -5,168 +5,20 @@ import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { FaLanguage } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 const SearchComponent = () => {
-
-  const tourGuidesData = [
-    {
-      "id": 1,
-      "name": "John Doe",
-      "location": "New York",
-      "language": "English",
-      "rating": 5,
-      "price": 200
-    },
-    {
-      "id": 2,
-      "name": "Jane Smith",
-      "location": "Chicago",
-      "language": "Spanish",
-      "rating": 4,
-      "price": 150
-    },
-    {
-      "id": 3,
-      "name": "Bob Johnson",
-      "location": "Atlanta",
-      "language": "French",
-      "rating": 5,
-      "price": 300
-    },
-    {
-      "id": 4,
-      "name": "Alice Williams",
-      "location": "San Francisco",
-      "language": "German",
-      "rating": 2,
-      "price": 400
-    },
-    {
-      "id": 5,
-      "name": "David Brown",
-      "location": "Los Angeles",
-      "language": "Italian",
-      "rating": 3,
-      "price": 150
-    },
-    {
-      "id": 6,
-      "name": "Charlie Miller",
-      "location": "Seattle",
-      "language": "Portuguese",
-      "rating": 5,
-      "price": 331
-    },
-    {
-      "id": 7,
-      "name": "Eva Davis",
-      "location": "Austin",
-      "language": "Dutch",
-      "rating": 4,
-      "price": 275
-    },
-    {
-      "id": 8,
-      "name": "Frank Wilson",
-      "location": "Boston",
-      "language": "Russian",
-      "rating": 1,
-      "price": 120
-    },
-    {
-      "id": 9,
-      "name": "Grace Taylor",
-      "location": "Denver",
-      "language": "Arabic",
-      "rating": 5,
-      "price": 350
-    },
-    {
-      "id": 10,
-      "name": "Harry Thomas",
-      "location": "Miami",
-      "language": "Japanese",
-      "rating": 3,
-      "price": 200
-    },
-    {
-      "id": 11,
-      "name": "Ivy Jackson",
-      "location": "Philadelphia",
-      "language": "Korean",
-      "rating": 4,
-      "price": 225
-    },
-    {
-      "id": 12,
-      "name": "Jack White",
-      "location": "Phoenix",
-      "language": "Chinese",
-      "rating": 2,
-      "price": 100
-    },
-    {
-      "id": 13,
-      "name": "Katie Harris",
-      "location": "Washington",
-      "language": "Hindi",
-      "rating": 5,
-      "price": 500
-    }
-
-
-  ]
-
-
   const [location, setLocation] = useState("");
-  const [rating, setRating] = useState("");
   const [language, setLanguage] = useState("");
+  const [rating, setRating] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
-  const filteredGuides = [];
-  const [uniqueGuidesByFilter, setUniqueGuidesByFilter] = useState([]);
-  const [showResults, setShowResults] = useState(false);
+
+  const handleSliderChange = (e) => {
+    setSliderValue(e.target.value);
+  }
 
 
-  const handleSliderChange = (event) => {
-    setSliderValue(event.target.value);
-  };
-
-  const handleSearch = () => {
-    setShowResults(true);
-    console.log(location, rating, language, sliderValue);
-    if (location !== "location") {
-      filteredGuides.push(...tourGuidesData.filter(guide => guide.location === location));
-    }
-
-    if (rating !== "rating") {
-      filteredGuides.push(...tourGuidesData.filter(guide => guide.rating === parseInt(rating)));
-    }
-
-    if (language !== "language") {
-      filteredGuides.push(...tourGuidesData.filter(guide => guide.language === language));
-    }
-
-    if (sliderValue !== 0) {
-      filteredGuides.push(...tourGuidesData.filter(guide => guide.price <= parseInt(sliderValue)));
-    }
-
-    // remove duplicates
-    const uniqueGuides = Array.from(new Set(filteredGuides.map(a => a.id)))
-      .map(id => {
-        return filteredGuides.find(a => a.id === id)
-      });
-
-    console.log(uniqueGuides);
-    setUniqueGuidesByFilter(uniqueGuides);
-
-    // console.log(filteredGuides);
-    setLanguage("language");
-    setLocation("location");
-    setRating("rating");
-    setSliderValue(0);
-  };
 
   return (
     <div
@@ -208,6 +60,7 @@ const SearchComponent = () => {
           <option value="Spanish">Spanish</option>
           <option value="French">French</option>
           <option value="German">German</option>
+          <option value="Hindi">Hindi</option>
         </select>
       </span>
 
@@ -239,14 +92,27 @@ const SearchComponent = () => {
         </span>
       </span>
       {/* span for search button */}
+
+      <Link
+        href={{
+          pathname: "/search",
+          query: {
+            location: location,
+            language: language,
+            rating: rating,
+            price: sliderValue,
+          }
+        }}
+      >
       <span
         className="flex items-center gap-4 border border-gray-300 px-4 py-2
-      bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 transition duration-200 ease-in-out
-      "
-        onClick={handleSearch}
-      >
+        bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 transition duration-200 ease-in-out
+        "
+        // onClick={handleSearch}
+        >
         <FaSearch className="text-lg text-white" />
       </span>
+      </Link>
     </div>
   );
 };

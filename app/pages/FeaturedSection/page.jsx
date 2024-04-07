@@ -1,11 +1,28 @@
+"use client";
 import { GoArrowRight } from "react-icons/go";
 import Image from "next/image";
 // import star icon from react-icons
-import { FaStar } from "react-icons/fa";
-// import location icon from react-icons
-import { MdLocationOn } from "react-icons/md";
+import { FaCommentDots, FaDollarSign, FaLanguage, FaMapMarkerAlt, FaStar } from "react-icons/fa";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 
 const FeaturedSection = () => {
+  const [talz, setTalz] = useState([]);
+  useEffect(() => {
+    // get all travel talz
+    axios
+      .get("http://localhost:3001/tourguides")
+      .then((res) => {
+        console.log(res.data);
+        setTalz(res.data.tourguides);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+    , []);
   return (
     <section className="flex flex-col w-full h-full bg-gray-100 px-12 md:px-32 py-4 md:py-12">
       <div className="flex flex-col md:flex-row justify-between items-center">
@@ -39,299 +56,89 @@ const FeaturedSection = () => {
       </div>
 
       {/* Cards Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-        {/* Card No.1 */}
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-2 relative pb-6">
-          <Image
-            src={"/p1.jpg"}
-            alt={"Profile"}
-            width={400}
-            height={400}
-            className="rounded-lg w-full"
-          />
-          {/* Button for Top Rating */}
+      <ul
+        className='mt-4 grid grid-cols-3 gap-8 py-6 bg-white'
+      >
+        {
+          talz.slice(0, 9).map(guide => (
+            <li
+              key={guide.id}
+              className='flex flex-col items-center gap-2 p-2 bg-gray-50 rounded-lg shadow-xl'
+            >
+              <Image
+                src={guide.profilePicture}
+                alt={guide.name}
+                width={200}
+                height={200}
+                className='rounded-md'
+              />
+              <hr
+                className="w-1/2 bg-gray-300 h-0.5 my-1"
+              />
+              <h2
+                className='text-2xl font-bold'
+              >
+                {guide.name}
+              </h2>
+              <hr
+                className="w-1/2 bg-gray-300 h-0.5 my-1"
+              />
+              <p
+                className='text-lg flex gap-2 justify-center items-center'
+              >
+                <FaMapMarkerAlt />
+                {guide.location}
+              </p>
+              <hr
+                className="w-1/2 bg-gray-300 h-0.5 my-1"
+              />
+              <p
+                className='text-lg flex gap-2 justify-center items-center'
+              >
+                <FaLanguage />
+                {guide.language}
+              </p>
+              <hr
+                className="w-1/2 bg-gray-300 h-0.5 my-1"
+              />
+              <p
+                className='text-lg flex gap-2 justify-center items-center'
+              >
+                {/* print stars of size rating */}
+                {
+                  Array(guide.rating).fill().map((_, i) => (
+                    <FaStar key={i} />
+                  ))
+                }
+              </p>
+              <hr
+                className="w-1/2 bg-gray-300 h-0.5 my-1"
+              />
+              <p
+                className='text-lg flex gap-2 justify-center items-center'
+              >
+                <FaDollarSign />
+                {guide.price}
+              </p>
+              <hr
+                className="w-1/2 bg-gray-300 h-0.5 my-1"
+              />
+              <Link
+                href={{
+                  pathname: '/TravelerProfile',
+                  query: { guideName: guide.name }
+                }}
+                className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg'
+              >
 
-          <button
-            className="text-black bg-green-400 px-4 py-2 rounded-full mt-4
-             hover:bg-green-600 transition duration-300 ease-in-out
-            absolute top-2 left-4 px-6 py-2
-            "
-          >
-            Top Rating
-          </button>
-          <div className="flex flex-col mt-4 gap-2 px-2">
-            <span className="flex justify-between text-gray-700">
-              <span className="text-xl font-semibold">John Doe</span>
-              <span className="flex items-center gap-1 text-gray-500">
-                <FaStar className="text-yellow-500" /> 4.5
-              </span>
-            </span>
-            <hr />
-            <span className="text-lg text-gray-500 flex items-center">
-              <MdLocationOn className="text-blue-500" /> London, UK
-            </span>
-            <hr />
-            <span className="flex justify-between items-center text-lg text-gray-500">
-              <span>
-                <i className="text-lg text-blue-500 font-semibold">$45</i>
-                /day
-              </span>
-              <span>
-                <button
-                  className="text-sm text-blue-500 bg-white border border-blue-500 px-2 py-1 rounded-full mt-4
-                    hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out
-                "
-                >
-                  Book Now
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
+                <FaCommentDots />
+                Contact with {guide.name}
 
-        {/* Card No.2 */}
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-2 relative pb-6">
-          <Image
-            src={"/p1.jpg"}
-            alt={"Profile"}
-            width={400}
-            height={400}
-            className="rounded-lg w-full"
-          />
-          {/* Button for Top Rating */}
-
-          <button
-            className="text-black bg-green-400 px-4 py-2 rounded-full mt-4
-             hover:bg-green-600 transition duration-300 ease-in-out
-            absolute top-2 left-4 px-6 py-2
-            "
-          >
-            Top Rating
-          </button>
-          <div className="flex flex-col mt-4 gap-2 px-2">
-            <span className="flex justify-between text-gray-700">
-              <span className="text-xl font-semibold">John Doe</span>
-              <span className="flex items-center gap-1 text-gray-500">
-                <FaStar className="text-yellow-500" /> 4.5
-              </span>
-            </span>
-            <hr />
-            <span className="text-lg text-gray-500 flex items-center">
-              <MdLocationOn className="text-blue-500" /> London, UK
-            </span>
-            <hr />
-            <span className="flex justify-between items-center text-lg text-gray-500">
-              <span>
-                <i className="text-lg text-blue-500 font-semibold">$45</i>
-                /day
-              </span>
-              <span>
-                <button
-                  className="text-sm text-blue-500 bg-white border border-blue-500 px-2 py-1 rounded-full mt-4
-                    hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out
-                "
-                >
-                  Book Now
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
-
-        {/* Card No.3 */}
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-2 relative pb-6">
-          <Image
-            src={"/p1.jpg"}
-            alt={"Profile"}
-            width={400}
-            height={400}
-            className="rounded-lg w-full"
-          />
-          {/* Button for Top Rating */}
-
-          <button
-            className="text-black bg-green-400 px-4 py-2 rounded-full mt-4
-             hover:bg-green-600 transition duration-300 ease-in-out
-            absolute top-2 left-4 px-6 py-2
-            "
-          >
-            Top Rating
-          </button>
-          <div className="flex flex-col mt-4 gap-2 px-2">
-            <span className="flex justify-between text-gray-700">
-              <span className="text-xl font-semibold">John Doe</span>
-              <span className="flex items-center gap-1 text-gray-500">
-                <FaStar className="text-yellow-500" /> 4.5
-              </span>
-            </span>
-            <hr />
-            <span className="text-lg text-gray-500 flex items-center">
-              <MdLocationOn className="text-blue-500" /> London, UK
-            </span>
-            <hr />
-            <span className="flex justify-between items-center text-lg text-gray-500">
-              <span>
-                <i className="text-lg text-blue-500 font-semibold">$45</i>
-                /day
-              </span>
-              <span>
-                <button
-                  className="text-sm text-blue-500 bg-white border border-blue-500 px-2 py-1 rounded-full mt-4
-                    hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out
-                "
-                >
-                  Book Now
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
-
-        {/* Card No.4 */}
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-2 relative pb-6">
-          <Image
-            src={"/p1.jpg"}
-            alt={"Profile"}
-            width={400}
-            height={400}
-            className="rounded-lg w-full"
-          />
-          {/* Button for Top Rating */}
-
-          <button
-            className="text-black bg-green-400 px-4 py-2 rounded-full mt-4
-             hover:bg-green-600 transition duration-300 ease-in-out
-            absolute top-2 left-4 px-6 py-2
-            "
-          >
-            Top Rating
-          </button>
-          <div className="flex flex-col mt-4 gap-2 px-2">
-            <span className="flex justify-between text-gray-700">
-              <span className="text-xl font-semibold">John Doe</span>
-              <span className="flex items-center gap-1 text-gray-500">
-                <FaStar className="text-yellow-500" /> 4.5
-              </span>
-            </span>
-            <hr />
-            <span className="text-lg text-gray-500 flex items-center">
-              <MdLocationOn className="text-blue-500" /> London, UK
-            </span>
-            <hr />
-            <span className="flex justify-between items-center text-lg text-gray-500">
-              <span>
-                <i className="text-lg text-blue-500 font-semibold">$45</i>
-                /day
-              </span>
-              <span>
-                <button
-                  className="text-sm text-blue-500 bg-white border border-blue-500 px-2 py-1 rounded-full mt-4
-                    hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out
-                "
-                >
-                  Book Now
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-2 relative pb-6">
-          <Image
-            src={"/p1.jpg"}
-            alt={"Profile"}
-            width={400}
-            height={400}
-            className="rounded-lg w-full"
-          />
-          {/* Button for Top Rating */}
-
-          <button
-            className="text-black bg-green-400 px-4 py-2 rounded-full mt-4
-             hover:bg-green-600 transition duration-300 ease-in-out
-            absolute top-2 left-4 px-6 py-2
-            "
-          >
-            Top Rating
-          </button>
-          <div className="flex flex-col mt-4 gap-2 px-2">
-            <span className="flex justify-between text-gray-700">
-              <span className="text-xl font-semibold">John Doe</span>
-              <span className="flex items-center gap-1 text-gray-500">
-                <FaStar className="text-yellow-500" /> 4.5
-              </span>
-            </span>
-            <hr />
-            <span className="text-lg text-gray-500 flex items-center">
-              <MdLocationOn className="text-blue-500" /> London, UK
-            </span>
-            <hr />
-            <span className="flex justify-between items-center text-lg text-gray-500">
-              <span>
-                <i className="text-lg text-blue-500 font-semibold">$45</i>
-                /day
-              </span>
-              <span>
-                <button
-                  className="text-sm text-blue-500 bg-white border border-blue-500 px-2 py-1 rounded-full mt-4
-                    hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out
-                "
-                >
-                  Book Now
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-col bg-white rounded-lg shadow-md p-2 relative pb-6">
-          <Image
-            src={"/p1.jpg"}
-            alt={"Profile"}
-            width={400}
-            height={400}
-            className="rounded-lg w-full"
-          />
-          {/* Button for Top Rating */}
-
-          <button
-            className="text-black bg-green-400 px-4 py-2 rounded-full mt-4
-             hover:bg-green-600 transition duration-300 ease-in-out
-            absolute top-2 left-4 px-6 py-2
-            "
-          >
-            Top Rating
-          </button>
-          <div className="flex flex-col mt-4 gap-2 px-2">
-            <span className="flex justify-between text-gray-700">
-              <span className="text-xl font-semibold">John Doe</span>
-              <span className="flex items-center gap-1 text-gray-500">
-                <FaStar className="text-yellow-500" /> 4.5
-              </span>
-            </span>
-            <hr />
-            <span className="text-lg text-gray-500 flex items-center">
-              <MdLocationOn className="text-blue-500" /> London, UK
-            </span>
-            <hr />
-            <span className="flex justify-between items-center text-lg text-gray-500">
-              <span>
-                <i className="text-lg text-blue-500 font-semibold">$45</i>
-                /day
-              </span>
-              <span>
-                <button
-                  className="text-sm text-blue-500 bg-white border border-blue-500 px-2 py-1 rounded-full mt-4
-                    hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out
-                "
-                >
-                  Book Now
-                </button>
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
+              </Link>
+            </li>
+          ))
+        }
+      </ul>
     </section>
   );
 };

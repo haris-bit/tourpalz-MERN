@@ -39,7 +39,13 @@ const LoginPage = () => {
         localStorage.setItem("email", email);
         localStorage.setItem("profileType", profileType);
         toast.success("Logged in successfully");
-        router.push("/home");
+        // if user is traveler then redirect to home page else to tour guide page
+        if (profileType === "traveler") {
+          router.push("/home");
+        }
+        else {
+          router.push("/TourGuideProfile");
+        }
       }
     });
   };

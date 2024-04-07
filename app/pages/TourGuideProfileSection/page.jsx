@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Image from "next/image";
+import { FaSignOutAlt } from "react-icons/fa";
+
 
 const TourGuideProfileSection = () => {
     const [profile, setProfile] = useState({
@@ -55,6 +57,16 @@ const TourGuideProfileSection = () => {
 
     return (
         <div className="flex flex-col gap-4 px-80">
+            <FaSignOutAlt className="text-blue-500 text-2xl cursor-pointer
+            absolute top-6 right-8 hover:text-blue-600
+            "
+                onClick={() => {
+                    localStorage.removeItem("email");
+                    window.location.href = "/";
+                }
+                }
+            />
+
             <Image
                 src={profile.profilePicture}
                 alt="Profile Picture"

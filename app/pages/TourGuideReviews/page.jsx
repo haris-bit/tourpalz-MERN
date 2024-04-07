@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 // import star icon from 'react-icons/fa';
-import { FaStar } from 'react-icons/fa';
+import { FaSignOutAlt, FaStar } from 'react-icons/fa';
 
 
 const TourGuideReviews = () => {
@@ -37,6 +37,16 @@ const TourGuideReviews = () => {
         <div
         className='px-80 pt-4 pb-20'
         >
+            <FaSignOutAlt className="text-blue-500 text-2xl cursor-pointer
+            absolute top-6 right-8 hover:text-blue-600
+            "
+                onClick={() => {
+                    localStorage.removeItem("email");
+                    window.location.href = "/";
+                }
+                }
+            />
+
             <h2 className="text-2xl font-bold mb-4">Tour Guide Reviews</h2>
             <div className="mb-4">
                 <p className="font-bold">Overall Rating: {calculateOverallRating().toFixed(1)}</p>

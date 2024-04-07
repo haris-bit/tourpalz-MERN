@@ -1,21 +1,18 @@
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
 import io from 'socket.io-client';
-import { FaSignOutAlt } from 'react-icons/fa';
-import Link from 'next/link';
+import { LuSend } from "react-icons/lu";
 
-const ChatComponent = () => {
+
+const ChatComponent = ({ guideName }) => {
     const [sender, setSender] = useState('');
-    const [receiver, setReceiver] = useState('');
+    const [receiver, setReceiver] = useState(guideName);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [tourGuideNames, setTourGuideNames] = useState([]);
     const [notificationPermission, setNotificationPermission] = useState(false);
     const socket = io('http://localhost:3001');
-
-
 
     useEffect(() => {
         const userEmail = localStorage.getItem('email');
@@ -29,18 +26,6 @@ const ChatComponent = () => {
                     console.error('Error fetching user:', error);
                 });
         }
-    }, []);
-
-    // get all tour guide names by calling the api endpoint /tourguides
-    // and set the tourGuideNames state to the response data
-    useEffect(() => {
-        axios.get('http://localhost:3001/tourguides')
-            .then((response) => {
-                setTourGuideNames(response.data.tourguides);
-            })
-            .catch((error) => {
-                console.error('Error fetching tour guides:', error);
-            });
     }, []);
 
 
@@ -91,30 +76,15 @@ const ChatComponent = () => {
         fetchMessages();
     }, [sender, receiver]);
 
-    const handleSendMessage = (e) => {
-        e.preventDefault();
-        console.log('Sending message:', newMessage);
-        console.log('Sender:', sender);
-        console.log('Receiver:', receiver);
-    }
 
 
     return (
         <div className="flex flex-col h-full">
-            {/* select the name of the tour guide */}
-            <select
-                name="tourGuide"
-                id="tourGuide"
-                onChange={(e) => setReceiver(e.target.value)}
-                value={receiver}
-                className="p-4 bg-blue-400 text-white font-bold text-center my-4"
-            >
-                {
-                    tourGuideNames.map((tourGuideName, index) => (
-                        <option key={index} value={tourGuideName.username}>{tourGuideName.username}</option>
-                    ))
-                }
-            </select>
+
+            <h1 className="text-xl font-semibold text-center my-4">
+                Start Chat with {receiver}
+            </h1>
+
             <div className="flex-grow overflow-auto">
                 {messages.map((message, index) => (
                     <div
@@ -148,7 +118,9 @@ const ChatComponent = () => {
                     onClick={sendMessage}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none"
                 >
-                    Send
+                    <LuSend
+                        className='text-2xl'
+                    />
                 </button>
             </div>
         </div>

@@ -1,11 +1,13 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
+import CustomerSupport from "../customersupport/page";
 
 const Services = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <Navbar />
+      <CustomerSupport />
       {/* Services Div */}
       <div className="w-full h-full services flex flex-col items-center justify-center bg-gray-100 px-32 pt-16 pb-12">
         <h1 className="text-4xl font-bold text-blue-400 py-8">Services Page</h1>

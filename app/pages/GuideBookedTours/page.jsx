@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaCalendarAlt, FaUsers, FaMapMarkerAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
 
 const GuideBookedTours = () => {
     // Sample data for booked tour details
@@ -19,6 +19,16 @@ const GuideBookedTours = () => {
 
     return (
         <div className="flex flex-col w-full h-full">
+            <FaSignOutAlt className="text-blue-500 text-2xl cursor-pointer
+            absolute top-6 right-8 hover:text-blue-600
+            "
+                onClick={() => {
+                    localStorage.removeItem("email");
+                    window.location.href = "/";
+                }
+                }
+            />
+
             <div className="flex flex-col items-center justify-center mt-10 w-full">
                 <div className="bg-white p-8 rounded-md shadow-lg">
                     <div className="flex items-center mb-4">

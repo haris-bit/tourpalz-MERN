@@ -49,7 +49,7 @@ const TourGuideProfilePage = () => {
     return (
         <div className="flex flex-col items-center h-full bg-gray-100 py-4">
             <Link
-                href={'/home'}
+                href={'/TourGuideProfile'}
             >
             <Image src={'/logo.png'} alt="logo" width={200} height={200} />
             </Link>

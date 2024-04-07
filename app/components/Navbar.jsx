@@ -7,8 +7,9 @@ import { MdOutlineNotificationsNone } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// imoprt logout icon from react-icons
 import { FaSignOutAlt } from "react-icons/fa";
+import GoogleTranslate from "./google-translator";
+
 
 const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
@@ -17,6 +18,9 @@ const Navbar = () => {
   const [username, setUsername] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [profileType, setProfileType] = useState("");
+  const [showTranslateDropdown, setShowTranslateDropdown] = useState(false);
+
+
   // Get the email from localStorage on the client-side
   useEffect(() => {
     const email = localStorage.getItem("email");
@@ -47,7 +51,7 @@ const Navbar = () => {
       {/* Navbar for large devices  */}
       <div
         className="hidden md:flex md:justify-between md:items-center p-4 shadow-md
-            w-full fixed top-0 z-[500]
+            w-full fixed top-0 z-[100]
             py-4 px-32
             bg-white
           "
@@ -66,7 +70,7 @@ const Navbar = () => {
           "
             >
               <li className="cursor-pointer hover:text-blue-500 transition duration-200 ease-in-out">
-                <Link href={"/"}>Home</Link>
+                <Link href={"/home"}>Home</Link>
               </li>
               <li className="cursor-pointer hover:text-blue-500 transition duration-200 ease-in-out">
                 <Link href={"/buddies"}>Palz</Link>
@@ -155,6 +159,21 @@ const Navbar = () => {
               }}
             />
           </div>
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => setShowTranslateDropdown(!showTranslateDropdown)}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <span>Translate</span>
+            {/* Add an icon or any other visual indicator */}
+          </button>
+
+          {showTranslateDropdown && (
+            <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md p-2">
+              <GoogleTranslate />
+            </div>
+          )}
         </div>
       </div>
 

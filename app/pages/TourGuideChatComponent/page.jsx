@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import io from 'socket.io-client';
-import { FaSignOutAlt } from 'react-icons/fa';
-import Link from 'next/link';
+import { LuSend } from "react-icons/lu";
+import { FaSignOut, FaSignOutAlt } from 'react-icons/fa';
+
 
 const GuideChatComponent = () => {
     const [sender, setSender] = useState('');
@@ -14,7 +15,6 @@ const GuideChatComponent = () => {
     const [notificationPermission, setNotificationPermission] = useState(false);
     const [chats, setChats] = useState([]);
     const socket = io('http://localhost:3001');
-    const tourGuideNames = ["Haris","Neeraj"];
 
 
     useEffect(() => {
@@ -98,16 +98,16 @@ const GuideChatComponent = () => {
 
     return (
         <div className="flex flex-col h-full">
-            {/* <select
-                value={receiver}
-                onChange={(e) => setReceiver(e.target.value)}
-                className="p-4 border-b"
-            >
-                <option value="">Select a tour guide</option>
-                {chats.map((chat, index) => (
-                    <option key={index} value={chat}>{chat}</option>
-                ))}
-            </select> */}
+            <FaSignOutAlt className="text-blue-500 text-2xl cursor-pointer
+            absolute top-6 right-8 hover:text-blue-600
+            "
+                onClick={() => {
+                    localStorage.removeItem("email");
+                    window.location.href = "/";
+                }
+                }
+            />
+
             {chats && chats.length > 0 ? (
                 <div
                 className='border-b'
@@ -164,7 +164,9 @@ const GuideChatComponent = () => {
                     onClick={sendMessage}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none"
                 >
-                    Send
+                    <LuSend
+                        className='text-2xl'
+                    />
                 </button>
             </div>
         </div>
