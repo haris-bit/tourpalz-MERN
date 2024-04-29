@@ -14,22 +14,15 @@ const BuddiesFilter = () => {
 
   return (
     <div
-      className="w-[32rem] h-[34rem] bg-white shadow-lg flex flex-col mt-8 rounded-xl
-    px-4
+      className="w-fit h-fit bg-white shadow-lg flex flex-col mt-8 rounded-xl
+      px-10 py-2
+      md:px-20 md:py-4 mx-auto
     "
     >
       <h1 className="ml-4 text-2xl font-bold text-gray-800 self-left mt-4">
         Filter
       </h1>
-      {/* <hr className="border-b-1 border-gray-200 w-11/12 self-center my-4" />
-      <span className="rounded-full mx-4 p-4 flex items-center justify-between border-2 border-gray-200 p-2 mt-4">
-        <input
-          type="text"
-          placeholder="Keyword..."
-          className="w-11/12 outline-none"
-        />
-        <FaSearch className="text-gray-700" />
-      </span> */}
+
       <hr className="border-b-1 border-gray-200 w-11/12 self-center my-4" />
       {/* span for location dropdown */}
       <span className="rounded-full mx-4 p-4 flex items-center justify-between border-2 border-gray-200">
@@ -69,6 +62,7 @@ const BuddiesFilter = () => {
           <option value="French">French</option>
           <option value="German">German</option>
           <option value="Hindi">Hindi</option>
+          <option value="Urdu">Urdu</option>
         </select>
       </span>
 

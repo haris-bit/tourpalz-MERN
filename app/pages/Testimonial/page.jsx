@@ -7,7 +7,7 @@ import { MdLocationOn } from "react-icons/md";
 
 const Testimonial = () => {
   return (
-    <section className="flex flex-col w-full h-full bg-white pt-20 pb-24 px-32">
+    <section className="flex flex-col w-full h-full bg-white pt-20 pb-24 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
       <span
         className="flex items-center gap-4
                 bg-blue-50 p-2 rounded-full w-max
@@ -16,13 +16,13 @@ const Testimonial = () => {
         <GoArrowRight className="text-xl bg-blue-500 text-white rounded-full w-8 h-8 p-1 " />
         <p className="text-xl font-semibold text-blue-600">Testimonial</p>
       </span>
-      <h1 className="text-4xl font-bold mt-6 text-wrap text-gray-700">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-6 text-wrap text-gray-700">
         Our Satisfied Customers <br /> Says
       </h1>
 
       {/* Div for two testomonial cards */}
-      <div className="flex w-full h-full mt-4 gap-8 items-start pt-4 pb-20">
-        <div className="card1 flex-1 border border-gray-400 h-[22rem] rounded-xl pl-16 pr-4 pt-8">
+      <div className="flex flex-col sm:flex-row w-full h-full mt-4 gap-8 items-start pt-4 pb-20">
+        <div className="card1 flex-1 border border-gray-400 h-[22rem] rounded-xl pl-4 sm:pl-16 pr-4 pt-8">
           <span className="flex items-center gap-2">
             <MdOutlineStarPurple500 className="text-3xl text-yellow-500" />
             <MdOutlineStarPurple500 className="text-3xl text-yellow-500" />
@@ -30,7 +30,7 @@ const Testimonial = () => {
             <MdOutlineStarPurple500 className="text-3xl text-yellow-500" />
             <MdStarHalf className="text-3xl text-yellow-500" />
           </span>
-          <p className="text-xl text-gray-700 mt-4">
+          <p className="text-base sm:text-xl text-gray-700 mt-4">
             I had the best experience with Travel. It was my first time to
             travel and I was a little nervous but the guide was so friendly and
             helpful. I would definitely recommend it to everyone.
@@ -55,7 +55,7 @@ const Testimonial = () => {
             </div>
           </div>
         </div>
-        <div className="card2 flex-1 border border-gray-400 h-[22rem] rounded-xl pl-16 pr-4 pt-8">
+        <div className="card2 flex-1 border border-gray-400 h-[22rem] rounded-xl pl-4 sm:pl-16 pr-4 pt-8">
           <span className="flex items-center gap-2">
             <MdOutlineStarPurple500 className="text-3xl text-yellow-500" />
             <MdOutlineStarPurple500 className="text-3xl text-yellow-500" />
@@ -63,7 +63,7 @@ const Testimonial = () => {
             <MdOutlineStarPurple500 className="text-3xl text-yellow-500" />
             <MdStarHalf className="text-3xl text-yellow-500" />
           </span>
-          <p className="text-xl text-gray-700 mt-4">
+          <p className="text-base sm:text-xl text-gray-700 mt-4">
             I had the best experience with Travel. It was my first time to
             travel and I was a little nervous but the guide was so friendly and
             helpful. I would definitely recommend it to everyone.

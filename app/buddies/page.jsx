@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CustomerSupport from "../customersupport/page";
 
-
 const Buddies = () => {
   const [talz, setTalz] = useState([]);
   useEffect(() => {
@@ -32,10 +31,13 @@ const Buddies = () => {
         <CustomerSupport />
         <Navbar />
         {/* section */}
-        <section className="py-24 px-32 w-full h-full flex gap-8">
+        <section className="lg:py-24 lg:px-32 w-full h-full flex 
+        flex-col md:flex-row
+        gap-8
+        ">
           <BuddiesFilter />
           <ul
-            className='mt-8 grid grid-cols-2 gap-8 py-2 bg-white rounded-lg shadow-xl'
+            className='mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 py-2 bg-white rounded-lg shadow-xl'
           >
             {
               talz.slice(0, 6).map(guide => (
@@ -56,7 +58,7 @@ const Buddies = () => {
                   <h2
                     className='text-2xl font-bold'
                   >
-                    {guide.name}
+                    {guide.username}
                   </h2>
                   <hr
                     className="w-1/2 bg-gray-300 h-0.5 my-1"
@@ -104,13 +106,13 @@ const Buddies = () => {
                   <Link
                     href={{
                       pathname: '/TravelerProfile',
-                      query: { guideName: guide.name }
+                      query: { guideName: guide.username }
                     }}
                     className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg'
                   >
 
                     <FaCommentDots />
-                    Contact with {guide.name}
+                    Contact with {guide.username}
 
                   </Link>
                 </li>

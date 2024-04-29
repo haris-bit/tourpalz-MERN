@@ -15,12 +15,12 @@ const HomeSection = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <HeroSection />
-      <CustomerSupport />
       <SecondSection />
       <FeaturedSection />
-      <MemoriesSection />
       <TopCategories />
-      <Testimonial />
+      <MemoriesSection />
+      <Testimonial /> 
+      <CustomerSupport />
     </div>
   );
 

@@ -18,23 +18,12 @@ const SearchComponent = () => {
     setSliderValue(e.target.value);
   }
 
-
-
   return (
     <div
-      className="w-full h-full md:w-[70rem] md:h-24 bg-white flex flex-col gap-4 md:flex-row md:justify-between px-12 items-center shadow-md
-        z-50 absolute top-[24rem] md:top-[30rem] left-1/2 md:transform -translate-x-1/2 rounded-lg
+      className="w-fit h-fit p-4 md:w-[70rem] md:h-24 bg-white flex flex-col gap-4 md:flex-row md:justify-between px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 items-center shadow-md
+        z-50 absolute top-[28rem] md:top-[30rem] left-1/2 md:transform -translate-x-1/2 rounded-lg
         "
     >
-      {/* span for search */}
-      {/* <span className="flex items-center gap-4 border rounded-full border-gray-300 px-4 py-2">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="outline-none border-none w-full bg-transparent text-gray-800 font-normal"
-        />
-      </span> */}
-      {/* span for location */}
       <span className="flex items-center gap-4 border rounded-full border-gray-300 px-4 py-2">
         <TfiLocationPin className="text-xl text-gray-800" />
         <select name="location" id="location" className="bg-transparent"
@@ -104,14 +93,14 @@ const SearchComponent = () => {
           }
         }}
       >
-      <span
-        className="flex items-center gap-4 border border-gray-300 px-4 py-2
+        <span
+          className="flex items-center gap-4 border border-gray-300 px-4 py-2
         bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 transition duration-200 ease-in-out
         "
         // onClick={handleSearch}
         >
-        <FaSearch className="text-lg text-white" />
-      </span>
+          <FaSearch className="text-lg text-white" />
+        </span>
       </Link>
     </div>
   );

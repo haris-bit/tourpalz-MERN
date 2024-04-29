@@ -24,7 +24,7 @@ const FeaturedSection = () => {
   }
     , []);
   return (
-    <section className="flex flex-col w-full h-full bg-gray-100 px-12 md:px-32 py-4 md:py-12">
+    <section className="flex flex-col w-full h-full bg-gray-100 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-4 md:py-12">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div>
           <span
@@ -39,7 +39,7 @@ const FeaturedSection = () => {
             </p>
           </span>
 
-          <span className="text-3xl md:text-4xl font-bold mt-12 text-gray-700 py-4 md:py-8 tracking-wide md:tracking-wider leading-tight">
+          <span className="text-2xl sm:text-3xl md:text-4xl font-bold mt-12 text-gray-700 py-4 md:py-8 tracking-wide md:tracking-wider leading-tight">
             Our Best Travel Talz
           </span>
         </div>
@@ -57,7 +57,7 @@ const FeaturedSection = () => {
 
       {/* Cards Section */}
       <ul
-        className='mt-4 grid grid-cols-3 gap-8 py-6 bg-white'
+        className='mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-6 bg-white'
       >
         {
           talz.slice(0, 9).map(guide => (
@@ -78,7 +78,7 @@ const FeaturedSection = () => {
               <h2
                 className='text-2xl font-bold'
               >
-                {guide.name}
+                {guide.username}
               </h2>
               <hr
                 className="w-1/2 bg-gray-300 h-0.5 my-1"
@@ -126,13 +126,13 @@ const FeaturedSection = () => {
               <Link
                 href={{
                   pathname: '/TravelerProfile',
-                  query: { guideName: guide.name }
+                  query: { guideName: guide.username }
                 }}
                 className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg'
               >
 
                 <FaCommentDots />
-                Contact with {guide.name}
+                Contact with {guide.username}
 
               </Link>
             </li>

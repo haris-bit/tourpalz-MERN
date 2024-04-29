@@ -1,30 +1,24 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  FaUser,
-  FaEnvelope,
-  FaUnlockAlt,
-  FaUserEdit,
-  FaCamera,
-  FaRegEdit,
-  FaListUl,
-  FaComments,
-  FaTrashAlt,
-  FaStar,
-} from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
+import { FaUserEdit, FaListUl, FaComments, FaTrashAlt, FaStar } from "react-icons/fa";
 import { CiBookmarkCheck } from "react-icons/ci";
 import TravelerProfileSection from "../pages/TravelerProfileSection/page";
-import Image from "next/image";
 import BookTour from "../pages/BookTour/page";
-import BookedTourDetails from "../pages/BookedTours/page";
 import BookedTours from "../pages/BookedTours/page";
 import CancelBookings from "../pages/CancelBookings/page";
 import LeaveReviews from "../pages/LeaveReview/page";
 import TravelerChatComponent from "../pages/TravelerChatComponent/page";
-import Link from "next/link";
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from "react";
 
+const GuideNameComponent = () => {
+  const searchParams = useSearchParams();
+  const guideName = searchParams.get('guideName');
+  return guideName;
+}
 
 const TravelerProfilePage = () => {
   const [activeTab, setActiveTab] = useState("profile");
@@ -40,121 +34,93 @@ const TravelerProfilePage = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "profile":
-        return (
-          <div>
-            <TravelerProfileSection />
-          </div>
-        );
-
+        return <TravelerProfileSection />;
       case "bookTour":
-        return (
-          <div>
-            <BookTour />
-          </div>
-        );
-
+        return <BookTour />;
       case "bookedTours":
-        return (
-          <div>
-            <BookedTours />
-          </div>
-        );
+        return <BookedTours />;
       case "messageTourGuides":
-        return (
-          <div>
-            <TravelerChatComponent guideName={guideName} />
-          </div>
-        );
+        return <TravelerChatComponent guideName={guideName} />;
       case "cancelBookings":
-        return (
-          <div>
-            <CancelBookings />
-          </div>
-        );
+        return <CancelBookings />;
       case "leaveReviews":
-        return (
-          <div>
-            <LeaveReviews />
-          </div>
-        );
+        return <LeaveReviews />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex flex-col items-center h-full bg-gray-100 py-4">
-      <Link
-      href={"/home"}
-      >
-          <Image src={"/logo.png"} alt="logo" width={200} height={200} />
-      </Link>
-      <div className="p-8 rounded-lg shadow-md w-full max-w-full h-full">
-        <h1 className="text-2xl font-bold mb-4">Traveler Profile</h1>
-        <div className="flex mb-4 justify-between">
-          <div className="flex items-center space-x-12">
-            <div
-              onClick={() => setActiveTab("profile")}
-              className={`cursor-pointer ${
-                activeTab === "profile" ? "text-blue-500" : "text-gray-500"
-              } flex items-center space-x-2`}
-            >
-              <FaUserEdit />
-              <span>Profile</span>
-            </div>
-            <div
-              onClick={() => setActiveTab("bookTour")}
-              className={`cursor-pointer ${
-                activeTab === "bookTour" ? "text-blue-500" : "text-gray-500"
-              } flex items-center space-x-2`}
-            >
-              <CiBookmarkCheck />
-              <span>Customize Your Visit</span>
-            </div>
-            <div
-              onClick={() => setActiveTab("bookedTours")}
-              className={`cursor-pointer ${
-                activeTab === "bookedTours" ? "text-blue-500" : "text-gray-500"
-              } flex items-center space-x-2`}
-            >
-              <FaListUl />
-              <span>Booked Tours</span>
-            </div>
-            <div
-              onClick={() => setActiveTab("messageTourGuides")}
-              className={`cursor-pointer ${
-                activeTab === "messageTourGuides"
-                  ? "text-blue-500"
-                  : "text-gray-500"
-              } flex items-center space-x-2`}
-            >
-              <FaComments />
-              <span>Message Tour Guides</span>
-            </div>
-            <div
-              onClick={() => setActiveTab("cancelBookings")}
-              className={`cursor-pointer ${
-                activeTab === "cancelBookings"
-                  ? "text-blue-500"
-                  : "text-gray-500"
-              } flex items-center space-x-2`}
-            >
-              <FaTrashAlt />
-              <span>Cancel Bookings</span>
-            </div>
-            <div
-              onClick={() => setActiveTab("leaveReviews")}
-              className={`cursor-pointer ${
-                activeTab === "leaveReviews" ? "text-blue-500" : "text-gray-500"
-              } flex items-center space-x-2`}
-            >
-              <FaStar />
-              <span>Leave Reviews</span>
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 py-4">
+      <div className="p-4 w-full max-w-screen-lg">
+        <div className="mb-4">
+          <Link href={"/home"}>
+            <Image src={"/logo.png"} alt="logo" width={200} height={200} />
+          </Link>
+        </div>
+        <div className="rounded-lg shadow-md w-full">
+          <h1 className="text-2xl font-bold mb-4 text-center">Traveler Profile</h1>
+          <div className="flex mb-4 flex-wrap justify-center">
+            <div className="flex flex-wrap gap-4">
+              <ProfileTab
+                label="Profile"
+                icon={<FaUserEdit />}
+                active={activeTab === "profile"}
+                onClick={() => setActiveTab("profile")}
+              />
+              <ProfileTab
+                label="Customize Your Visit"
+                icon={<CiBookmarkCheck />}
+                active={activeTab === "bookTour"}
+                onClick={() => setActiveTab("bookTour")}
+              />
+              <ProfileTab
+                label="Booked Tours"
+                icon={<FaListUl />}
+                active={activeTab === "bookedTours"}
+                onClick={() => setActiveTab("bookedTours")}
+              />
+              <ProfileTab
+                label="Message Tour Guides"
+                icon={<FaComments />}
+                active={activeTab === "messageTourGuides"}
+                onClick={() => setActiveTab("messageTourGuides")}
+              />
+              <ProfileTab
+                label="Cancel Bookings"
+                icon={<FaTrashAlt />}
+                active={activeTab === "cancelBookings"}
+                onClick={() => setActiveTab("cancelBookings")}
+              />
+              <ProfileTab
+                label="Leave Reviews"
+                icon={<FaStar />}
+                active={activeTab === "leaveReviews"}
+                onClick={() => setActiveTab("leaveReviews")}
+              />
             </div>
           </div>
+          <div className="p-4">
+            {renderContent()}
+            <Suspense fallback={<div>Loading...</div>}>
+              <GuideNameComponent />
+            </Suspense>
+          </div>
         </div>
-        {renderContent()}
       </div>
+    </div>
+  );
+};
+
+const ProfileTab = ({ label, icon, active, onClick }) => {
+  return (
+    <div
+      className={`cursor-pointer ${active ? "text-blue-500" : "text-gray-500"
+        } flex items-center space-x-2`}
+      onClick={onClick}
+    >
+      {icon}
+      <span>{label}</span>
     </div>
   );
 };

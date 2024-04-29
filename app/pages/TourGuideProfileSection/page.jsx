@@ -1,12 +1,10 @@
 "use client";
-import React from "react";
-import { FaUser, FaEnvelope, FaUnlockAlt, FaCamera } from "react-icons/fa";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
+import { FaUser, FaEnvelope, FaUnlockAlt, FaCamera, FaSignOutAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Image from "next/image";
-import { FaSignOutAlt } from "react-icons/fa";
-
 
 const TourGuideProfileSection = () => {
     const [profile, setProfile] = useState({
@@ -19,7 +17,6 @@ const TourGuideProfileSection = () => {
     });
 
     const handleProfilePictureChange = (e) => {
-        // Logic to change profile picture
         const file = e.target.files[0];
         const reader = new FileReader();
 
@@ -33,46 +30,45 @@ const TourGuideProfileSection = () => {
         reader.readAsDataURL(file);
     };
 
-    const handleUpdateProfile = () => {
-        // Logic to update profile
-        toast.success("Profile updated successfully");
-    };
-
     useEffect(() => {
-        // get email from local storage
         const email = localStorage.getItem("email");
-        console.log(email);
         axios
-            .get(`http://localhost:3001/users/${email}`)
+            .get(`http://localhost:3001/guides/${email}`)
             .then((res) => {
-                console.log(res.data);
                 setProfile(res.data.user);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }
-        , []);
+    }, []);
 
+    const handleUpdateProfile = () => {
+        const email = localStorage.getItem("email");
+        axios
+            .put(`http://localhost:3001/guides/${email}`, profile)
+            .then((res) => {
+                toast.success("Profile updated successfully");
+            })
+            .catch((err) => {
+                toast.error("Failed to update profile");
+            });
+    };
 
     return (
-        <div className="flex flex-col gap-4 px-80">
-            <FaSignOutAlt className="text-blue-500 text-2xl cursor-pointer
-            absolute top-6 right-8 hover:text-blue-600
-            "
+        <div className="flex flex-col gap-4 px-4 md:px-8"> {/* Adjusted padding for smaller screens */}
+            <FaSignOutAlt
+                className="text-blue-500 text-2xl cursor-pointer absolute top-6 right-8 hover:text-blue-600"
                 onClick={() => {
                     localStorage.removeItem("email");
                     window.location.href = "/";
-                }
-                }
+                }}
             />
-
             <Image
                 src={profile.profilePicture}
                 alt="Profile Picture"
                 width={100}
                 height={100}
-                className="rounded-full mx-auto "
+                className="rounded-full mx-auto"
             />
             <div className="flex items-center mb-4">
                 <FaUser className="text-gray-400 mr-2" />
@@ -83,9 +79,7 @@ const TourGuideProfileSection = () => {
                     onChange={(e) =>
                         setProfile({ ...profile, username: e.target.value })
                     }
-                    className="focus:outline-none flex-grow p-3
-                    hover:border-blue-500 border-b-2 border-transparent
-                  "
+                    className="focus:outline-none flex-grow p-3 border-b-2 border-transparent"
                 />
             </div>
             <div className="flex items-center mb-4">
@@ -95,9 +89,7 @@ const TourGuideProfileSection = () => {
                     placeholder="Email"
                     value={profile.email}
                     onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                    className="focus:outline-none flex-grow p-3
-                    hover:border-blue-500 border-b-2 border-transparent
-                  "
+                    className="focus:outline-none flex-grow p-3 border-b-2 border-transparent"
                 />
             </div>
             <div className="flex items-center mb-4">
@@ -107,47 +99,30 @@ const TourGuideProfileSection = () => {
                     placeholder="Password"
                     value={profile.password}
                     onChange={(e) => setProfile({ ...profile, password: e.target.value })}
-                    className="focus:outline-none flex-grow p-3
-                    hover:border-blue-500 border-b-2 border-transparent
-                  "
+                    className="focus:outline-none flex-grow p-3 border-b-2 border-transparent"
                 />
             </div>
-
-
-            {/* Location */}
             <div className="flex items-center mb-4">
                 <FaUser className="text-gray-400 mr-2" />
                 <input
                     type="text"
                     placeholder="Location"
                     value={profile.location}
-                    onChange={(e) =>
-                        setProfile({ ...profile, location: e.target.value })
-                    }
-                    className="focus:outline-none flex-grow p-3
-                    hover:border-blue-500 border-b-2 border-transparent
-                  "
+                    onChange={(e) => setProfile({ ...profile, location: e.target.value })}
+                    className="focus:outline-none flex-grow p-3 border-b-2 border-transparent"
                 />
             </div>
-
-            {/* Profile Type as select. By default select the profile type stored in the backend */}
             <div className="flex items-center mb-4">
                 <FaUser className="text-gray-400 mr-2" />
                 <select
                     value={profile.profileType}
-                    onChange={(e) =>
-                        setProfile({ ...profile, profileType: e.target.value })
-                    }
-                    className="focus:outline-none flex-grow p-3
-                    hover:border-blue-500 border-b-2 border-transparent
-                  "
+                    onChange={(e) => setProfile({ ...profile, profileType: e.target.value })}
+                    className="focus:outline-none flex-grow p-3 border-b-2 border-transparent"
                 >
                     <option value="traveler">Traveler</option>
                     <option value="tourGuide">Tour Guide</option>
                 </select>
             </div>
-
-
             <div className="flex items-center mb-4">
                 <FaCamera className="text-gray-400 mr-2" />
                 <input
@@ -159,9 +134,7 @@ const TourGuideProfileSection = () => {
             </div>
             <button
                 onClick={handleUpdateProfile}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
-              w-1/8 mx-auto
-            "
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             >
                 Update Profile
             </button>

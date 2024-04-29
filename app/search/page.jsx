@@ -123,7 +123,7 @@ const SearchResults = () => {
                             <h2
                                 className='text-2xl font-bold'
                             >
-                                {guide.name}
+                                {guide.username}
                             </h2>
                             <button
                                 className='text-sm flex gap-2 justify-center items-center
@@ -159,13 +159,13 @@ const SearchResults = () => {
                             <Link
                                 href={{
                                     pathname: '/TravelerProfile',
-                                    query: { guideName: guide.name }
+                                    query: { guideName: guide.username }
                                 }}
                                 className='flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg'
                             >
 
                                 <FaCommentDots />
-                                Contact with {guide.name}
+                                Contact with {guide.username}
 
                             </Link>
                         </li>

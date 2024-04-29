@@ -48,53 +48,57 @@ const TourGuideProfilePage = () => {
 
     return (
         <div className="flex flex-col items-center h-full bg-gray-100 py-4">
-            <Link
-                href={'/TourGuideProfile'}
-            >
-            <Image src={'/logo.png'} alt="logo" width={200} height={200} />
-            </Link>
-            <div className="p-8 rounded-lg shadow-md w-full max-w-full h-full">
-                <h1 className="text-2xl font-bold mb-4">Tour Guide Profile</h1>
-                <div className="flex mb-4 justify-between">
-                    <div className="flex items-center space-x-12">
-                        <div
-                            onClick={() => setActiveTab('profile')}
-                            className={`cursor-pointer ${activeTab === 'profile' ? 'text-blue-500' : 'text-gray-500'
-                                } flex items-center space-x-2`}
-                        >
-                            <FaUser />
-                            <span>Profile</span>
-                        </div>
-                        <div
-                            onClick={() => setActiveTab('bookedTours')}
-                            className={`cursor-pointer ${activeTab === 'bookedTours' ? 'text-blue-500' : 'text-gray-500'
-                                } flex items-center space-x-2`}
-                        >
-                            <FaListUl />
-                            <span>Booked Tours</span>
-                        </div>
-                        <div
-                            onClick={() => setActiveTab('messageTravelers')}
-                            className={`cursor-pointer ${activeTab === 'messageTravelers' ? 'text-blue-500' : 'text-gray-500'
-                                } flex items-center space-x-2`}
-                        >
-                            <FaComments />
-                            <span>Message Travelers</span>
-                        </div>
-                        <div
-                            onClick={() => setActiveTab('tourGuideReviews')}
-                            className={`cursor-pointer ${activeTab === 'tourGuideReviews' ? 'text-blue-500' : 'text-gray-500'
-                                } flex items-center space-x-2`}
-                        >
-                            <FaStar />
-                            <span>Tour Guide Reviews</span>
+            <div className="w-full max-w-screen-md"> {/* Added container to limit width on larger screens */}
+                <Link href={'/TourGuideProfile'}>
+                    <Image src={'/logo.png'} alt="logo" width={200} height={200} />
+                </Link>
+                <div className="p-4 sm:p-8 rounded-lg shadow-md w-full max-w-full h-full">
+                    <h1 className="text-xl sm:text-2xl font-bold mb-4">Tour Guide Profile</h1> {/* Adjusted text size for smaller screens */}
+                    <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <div className="flex flex-wrap sm:flex-nowrap gap-4 sm:gap-12 mb-4 sm:mb-0 justify-center"> {/* Adjusted spacing and alignment for smaller screens */}
+                            <TabButton
+                                active={activeTab === 'profile'}
+                                onClick={() => setActiveTab('profile')}
+                                icon={<FaUser />}
+                                label="Profile"
+                            />
+                            <TabButton
+                                active={activeTab === 'bookedTours'}
+                                onClick={() => setActiveTab('bookedTours')}
+                                icon={<FaListUl />}
+                                label="Booked Tours"
+                            />
+                            <TabButton
+                                active={activeTab === 'messageTravelers'}
+                                onClick={() => setActiveTab('messageTravelers')}
+                                icon={<FaComments />}
+                                label="Message Travelers"
+                            />
+                            <TabButton
+                                active={activeTab === 'tourGuideReviews'}
+                                onClick={() => setActiveTab('tourGuideReviews')}
+                                icon={<FaStar />}
+                                label="Tour Guide Reviews"
+                            />
                         </div>
                     </div>
+                    {renderContent()}
                 </div>
-                {renderContent()}
             </div>
         </div>
     );
 };
+
+// Custom component for tab buttons
+const TabButton = ({ active, onClick, icon, label }) => (
+    <div
+        onClick={onClick}
+        className={`cursor-pointer flex items-center space-x-2 ${active ? 'text-blue-500' : 'text-gray-500'
+            }`}
+    >
+        {icon}
+        <span className="hidden sm:inline">{label}</span> {/* Hide label on small screens */}
+    </div>
+);
 
 export default TourGuideProfilePage;

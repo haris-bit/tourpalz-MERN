@@ -1,5 +1,10 @@
+"use client";
+
+import axios from "axios";
 import Image from "next/image";
+import { useEffect } from "react";
 import { FaCalendarAlt, FaUsers, FaMapMarkerAlt } from "react-icons/fa";
+import { useState } from "react";
 
 const BookedTours = () => {
   // Sample data for booked tour details
@@ -17,49 +22,65 @@ const BookedTours = () => {
     },
   };
 
+  const [bookedTours, setBookedTours] = useState([]);
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    axios
+      .get(`http://localhost:3001/tours/${email}`)
+      .then((res) => {
+        setBookedTours(res.data.tours);
+        console.log(res.data.tours);
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+      );
+  }, []);
+
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="flex flex-col items-center justify-center mt-10 w-full">
-        <div className="bg-white p-8 rounded-md shadow-lg">
-          <div className="flex items-center mb-4">
-            <FaMapMarkerAlt className="text-gray-500 mr-2" />
-            <p className="text-lg">{bookedTour.destination}</p>
-          </div>
-          <div className="flex items-center mb-4">
-            <FaCalendarAlt className="text-gray-500 mr-2" />
-            <p className="text-lg">{bookedTour.date}</p>
-          </div>
-          <div className="flex items-center mb-4">
-            <FaUsers className="text-gray-500 mr-2" />
-            <p className="text-lg">{bookedTour.numberOfPeople} people</p>
-          </div>
-          <div className="flex items-center mb-4">
-            <p className="text-lg">
-              Start Position: {bookedTour.startPosition}
-            </p>
-          </div>
-          <div className="flex items-center">
-            <Image
-              src={bookedTour.tourGuide.profileImage}
-              alt={bookedTour.tourGuide.name}
-              width={48}
-              height={48}
-              className="w-12 h-12 rounded-full mr-4"
-            />
-            <div>
-              <p className="text-lg">{bookedTour.tourGuide.name}</p>
-              <p className="text-gray-500 text-sm">
-                Location: {bookedTour.tourGuide.location}
-              </p>
-              <p className="text-gray-500 text-sm">
-                Languages: {bookedTour.tourGuide.languages.join(", ")}
-              </p>
-              <p className="text-gray-500 text-sm">
-                Rating: {bookedTour.tourGuide.rating}/5
-              </p>
+      <h1 className="text-2xl font-bold text-center mb-4">Booked Tours</h1>
+      <div className="flex flex-col items-center">
+        {bookedTours.length === 0 ? (
+          <p className="text-center">No tours booked yet</p>
+        ) : (
+          bookedTours.map((tour) => (
+            <div
+              key={tour.id}
+              className="grid grid-cols-4 items-center w-full p-4 border border-gray-300 rounded-lg shadow-md mb-4
+              bg-white
+              "
+            >
+              <div className="flex items-center w-full">
+                <div className="ml-2">
+                  <p className="font-bold">
+                    Tour Guide:
+                    {tour.guide}
+                  </p>
+                  <p>
+                    Destination:
+                    {tour.destination}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center w-full mt-4">
+                <FaCalendarAlt className="mr-1" />
+                <p>{tour.date}</p>
+              </div>
+              <div className="flex items-center w-full mt-2">
+                <FaUsers className="mr-1" />
+                <p>{tour.noOfPeople} people</p>
+              </div>
+
+              {/* special request */}
+              <div className="flex items-center w-full mt-2">
+                <p>Special Request: {tour.specialRequest}</p>
+              </div>
+
             </div>
-          </div>
-        </div>
+          ))
+        )}
       </div>
     </div>
   );

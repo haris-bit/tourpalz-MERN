@@ -1,15 +1,19 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { FaCalendarAlt, FaUsers, FaMapMarkerAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
+import axios from "axios";
 
 const BookTour = () => {
+  const [tourGuides, setTourGuides] = useState([]);
   const [tourDetails, setTourDetails] = useState({
     destination: "",
     date: "",
-    numberOfPeople: 1,
+    noOfPeople: 1,
     specialRequest: "",
+    travelerEmail: "",
     selectedTourGuide: "",
     filters: {
       topRated: false,
@@ -17,68 +21,50 @@ const BookTour = () => {
     },
   });
 
+  useEffect(() => {
+    const travelerEmail = localStorage.getItem("email");
+    setTourDetails({ ...tourDetails, travelerEmail });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/tourguides")
+      .then((res) => {
+        setTourGuides(res.data.tourguides);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTourDetails({ ...tourDetails, [name]: value });
   };
 
-  const handleFilterChange = (e) => {
-    const { name, checked } = e.target;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/tour", tourDetails)
+      .then((res) => {
+        toast.success("Tour booked successfully");
+      })
+      .catch((err) => {
+        toast.error("Failed to book tour");
+      });
     setTourDetails({
-      ...tourDetails,
+      destination: "",
+      date: "",
+      noOfPeople: 1,
+      specialRequest: "",
+      travelerEmail: "",
+      selectedTourGuide: "",
       filters: {
-        ...tourDetails.filters,
-        [name]: checked,
+        topRated: false,
+        nearby: false,
       },
     });
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Logic to submit tour details
-    console.log("Tour details submitted:", tourDetails);
-    toast.success(
-      `Your Trip to ${tourDetails.destination} booked successfully`
-    );
-  };
-
-  const topRated = [
-    {
-      id: 1,
-      name: "John Doe",
-      rating: 5,
-      location: "New York, USA",
-      languages: ["English", "Spanish"],
-      profileImage: "/images/tour-guide-1.jpg",
-    },
-    {
-      id: 2,
-      name: "Jane Doe",
-      rating: 4.9,
-      location: "Paris, France",
-      languages: ["French", "English"],
-      profileImage: "/images/tour-guide-2.jpg",
-    },
-  ];
-
-  const nearby = [
-    {
-      id: 3,
-      name: "John Smith",
-      rating: 4,
-      location: "London, UK",
-      languages: ["English", "German"],
-      profileImage: "/images/tour-guide-3.jpg",
-    },
-    {
-      id: 4.5,
-      name: "Jane Smith",
-      rating: 4,
-      location: "Berlin, Germany",
-      languages: ["German", "English"],
-      profileImage: "/images/tour-guide-4.jpg",
-    },
-  ];
 
   const [showTourGuideModal, setShowTourGuideModal] = useState(false);
   const [selectedGuideDetails, setSelectedGuideDetails] = useState(null);
@@ -89,8 +75,11 @@ const BookTour = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full px-80">
-      <form onSubmit={handleSubmit} className="flex flex-col w-full h-full">
+    <div className="flex flex-col justify-center items-center w-full px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col w-full max-w-lg p-4 bg-white shadow-md rounded-lg"
+      >
         <div className="mb-4">
           <label htmlFor="destination" className="block mb-2">
             Destination
@@ -137,34 +126,26 @@ const BookTour = () => {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="noOfPeople" className="block mb-2">
+            No of People
+          </label>
+          <div className="flex items-center">
+            <FaUsers className="text-gray-500 mr-2" />
+            <input
+              type="number"
+              id="noOfPeople"
+              name="noOfPeople"
+              value={tourDetails.noOfPeople}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 rounded-md border focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
+        </div>
+        <div className="mb-4">
           <label htmlFor="selectedTourGuide" className="block mb-2">
             Select Tour Guide
           </label>
-          <div className="mb-4">
-            <label className="block mb-2">Filters:</label>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="topRated"
-                name="topRated"
-                checked={tourDetails.filters.topRated}
-                onChange={handleFilterChange}
-                className="mr-2"
-              />
-              <label htmlFor="topRated" className="mr-4">
-                Top Rated
-              </label>
-              <input
-                type="checkbox"
-                id="nearby"
-                name="nearby"
-                checked={tourDetails.filters.nearby}
-                onChange={handleFilterChange}
-                className="mr-2"
-              />
-              <label htmlFor="nearby">Nearby</label>
-            </div>
-          </div>
           <select
             id="selectedTourGuide"
             name="selectedTourGuide"
@@ -174,29 +155,13 @@ const BookTour = () => {
             required
           >
             <option value="">Select a Tour Guide</option>
-            {tourDetails.filters.topRated &&
-              topRated.map((guide) => (
-                <option
-                  key={guide.id}
-                  value={guide.name}
-                  onMouseEnter={() => handleGuideHover(guide)}
-                >
-                  {guide.name} - {guide.location}- ({guide.rating}/5 stars)
-                </option>
-              ))}
-            {tourDetails.filters.nearby &&
-              nearby.map((guide) => (
-                <option
-                  key={guide.id}
-                  value={guide.name}
-                  onMouseEnter={() => handleGuideHover(guide)}
-                >
-                  {guide.name} - {guide.location}- ({guide.rating}/5 stars)
-                </option>
-              ))}
+            {tourGuides.map((guide) => (
+              <option key={guide.id} value={guide.id}>
+                {guide.username}
+              </option>
+            ))}
           </select>
         </div>
-
         <div className="text-center">
           <button
             type="submit"
@@ -213,12 +178,20 @@ const BookTour = () => {
       >
         {/* Modal content */}
         {selectedGuideDetails && (
-          <div>
-            <h2>{selectedGuideDetails.name}</h2>
-            <p>Location: {selectedGuideDetails.location}</p>
-            <p>Languages: {selectedGuideDetails.languages.join(", ")}</p>
-            <p>Rating: {selectedGuideDetails.rating}/5</p>
-            {/* Add more details as needed */}
+          <div className="p-4">
+            <h2 className="text-xl font-bold mb-2">
+              {selectedGuideDetails.name}
+            </h2>
+            <p>
+              Location: <span>{selectedGuideDetails.location}</span>
+            </p>
+            <p>
+              Languages:{" "}
+              <span>{selectedGuideDetails.languages.join(", ")}</span>
+            </p>
+            <p>
+              Rating: <span>{selectedGuideDetails.rating}/5</span>
+            </p>
           </div>
         )}
       </Modal>

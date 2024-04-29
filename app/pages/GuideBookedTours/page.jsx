@@ -1,75 +1,68 @@
+"use client";
 import Image from "next/image";
 import { FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaSignOutAlt } from "react-icons/fa";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const GuideBookedTours = () => {
-    // Sample data for booked tour details
-    const bookedTour = {
-        destination: "Paris, France",
-        date: "2024-03-10",
-        numberOfPeople: 2,
-        startPosition: "Eiffel Tower",
-        tourGuide: {
-            name: "Jane Doe",
-            location: "Paris, France",
-            languages: ["English", "French"],
-            rating: 4.9,
-            profileImage: "/user-1.jpg",
-        },
-    };
+    const [bookedTours, setBookedTours] = useState([]);
+
+    useEffect(() => {
+        const email = localStorage.getItem("email");
+        axios
+            .get(`http://localhost:3001/tours/${email}`)
+            .then((res) => {
+                setBookedTours(res.data.tours);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     return (
-        <div className="flex flex-col w-full h-full">
-            <FaSignOutAlt className="text-blue-500 text-2xl cursor-pointer
-            absolute top-6 right-8 hover:text-blue-600
-            "
+        <div className="flex flex-col items-center justify-center w-full h-full px-4 md:px-8">
+            <FaSignOutAlt
+                className="text-blue-500 text-2xl cursor-pointer absolute top-6 right-8 hover:text-blue-600"
                 onClick={() => {
                     localStorage.removeItem("email");
                     window.location.href = "/";
-                }
-                }
+                }}
             />
-
-            <div className="flex flex-col items-center justify-center mt-10 w-full">
-                <div className="bg-white p-8 rounded-md shadow-lg">
-                    <div className="flex items-center mb-4">
-                        <FaMapMarkerAlt className="text-gray-500 mr-2" />
-                        <p className="text-lg">{bookedTour.destination}</p>
-                    </div>
-                    <div className="flex items-center mb-4">
-                        <FaCalendarAlt className="text-gray-500 mr-2" />
-                        <p className="text-lg">{bookedTour.date}</p>
-                    </div>
-                    <div className="flex items-center mb-4">
-                        <FaUsers className="text-gray-500 mr-2" />
-                        <p className="text-lg">{bookedTour.numberOfPeople} people</p>
-                    </div>
-                    <div className="flex items-center mb-4">
-                        <p className="text-lg">
-                            Start Position: {bookedTour.startPosition}
-                        </p>
-                    </div>
-                    <div className="flex items-center">
-                        <Image
-                            src={bookedTour.tourGuide.profileImage}
-                            alt={bookedTour.tourGuide.name}
-                            width={48}
-                            height={48}
-                            className="w-12 h-12 rounded-full mr-4"
-                        />
-                        <div>
-                            <p className="text-lg">{bookedTour.tourGuide.name}</p>
-                            <p className="text-gray-500 text-sm">
-                                Location: {bookedTour.tourGuide.location}
-                            </p>
-                            <p className="text-gray-500 text-sm">
-                                Languages: {bookedTour.tourGuide.languages.join(", ")}
-                            </p>
-                            <p className="text-gray-500 text-sm">
-                                Rating: {bookedTour.tourGuide.rating}/5
-                            </p>
+            <div className="grid grid-cols-1 gap-4 mt-10 w-full">
+                {bookedTours.map((tour, index) => (
+                    <div key={index} className="bg-white p-4 rounded-md shadow-lg mb-4">
+                        <div className="flex flex-col gap-2 mb-4">
+                            <div className="flex items-center gap-2">
+                                <FaMapMarkerAlt className="text-blue-500" />
+                                <label className="text-lg">Destination:</label>
+                            </div>
+                            <p>{tour.destination}</p>
+                        </div>
+                        <div className="flex flex-col gap-2 mb-4">
+                            <div className="flex items-center gap-2">
+                                <FaCalendarAlt className="text-blue-500" />
+                                <label className="text-lg">Date:</label>
+                            </div>
+                            <p>{tour.date}</p>
+                        </div>
+                        <div className="flex flex-col gap-2 mb-4">
+                            <div className="flex items-center gap-2">
+                                <FaUsers className="text-blue-500" />
+                                <label className="text-lg">Number of people:</label>
+                            </div>
+                            <p>{tour.noOfPeople}</p>
+                        </div>
+                        <div className="flex flex-col gap-2 mb-4">
+                            <div className="flex items-center gap-2">
+                                <FaUsers className="text-blue-500" />
+                                <label className="text-lg">Tour guide:</label>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <p>{tour.guide}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ))}
             </div>
         </div>
     );

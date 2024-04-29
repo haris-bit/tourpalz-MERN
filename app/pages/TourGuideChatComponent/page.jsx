@@ -20,7 +20,7 @@ const GuideChatComponent = () => {
     useEffect(() => {
         const userEmail = localStorage.getItem('email');
         if (userEmail) {
-            axios.get(`http://localhost:3001/users/${userEmail}`)
+            axios.get(`http://localhost:3001/guides/${userEmail}`)
                 .then((response) => {
                     setSender(response.data.user.username);
                     console.log('User:', response.data);

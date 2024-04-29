@@ -91,30 +91,6 @@ const Navbar = () => {
         {/* Div for notification and profile */}
         <div className="flex justify-around items-center gap-4">
           <div
-            className="flex justify-around items-center gap-5 cursor-pointer transition duration-200 ease-in-out
-                bg-gray-100 p-2 rounded-full
-        "
-          >
-            <MdOutlineNotificationsNone
-              className="text-2xl cursor-pointer
-            font-normal
-                text-gray-500 transition duration-200 ease-in-out
-          "
-            />
-          </div>
-          {/* <div>
-            <Image
-              src={"/user-1.jpg"}
-              alt={"Profile"}
-              width={40}
-              height={40}
-              className="rounded-full cursor-pointer"
-              onClick={() => setShowProfile(!showProfile)}
-            />
-            {showProfile && <Profile />}
-          </div> */}
-          {/* view profile button */}
-          <div
           className="flex gap-4 justify-center items-center relative"
           >
             {
@@ -182,13 +158,8 @@ const Navbar = () => {
         {/* Div for Profile and Navbar Menu */}
         <div className="flex justify-between items-center gap-4">
           <span className="flex gap-4">
-            <MdOutlineNotificationsNone
-              className="text-3xl cursor-pointer
-                bg-gray-100 p-2 rounded-full
-            "
-            />
             <Image
-              src="/user-1.jpg"
+              src={profilePicture}
               alt="Profile"
               width={30}
               height={30}
@@ -197,7 +168,15 @@ const Navbar = () => {
             />
           </span>
 
-          <span>{showProfile && <Profile />}</span>
+          <span>
+            <Link href={"/TravelerProfile"}>
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                View Profile
+              </button>
+            </Link>
+          </span>
         </div>
         <div>
           <MdMenu
@@ -210,6 +189,7 @@ const Navbar = () => {
             <div
               className="md:hidden absolute top-16 left-0 w-full
                         shadow-xl z-50 border-gray-700 rounded-b-lg
+                        bg-white
                     "
             >
               <div className="px-8">
@@ -222,22 +202,39 @@ const Navbar = () => {
                 />
               </div>
               <ul className="flex flex-col items-start px-8 gap-8 py-4">
-                <li className="text-lg cursor-pointer hover:text-blue-500 ">
+                <Link
+                  href={"/home"}
+                  className="text-lg cursor-pointer hover:text-blue-500 ">
                   Home
                   <hr className="w-[34rem]" />
-                </li>
-                <li className="text-lg cursor-pointer hover:text-blue-500 ">
-                  About
+                </Link>
+
+                <Link
+                  href={"/buddies"}
+                  className="text-lg cursor-pointer hover:text-blue-500 ">
+                  Buddies
                   <hr className="w-[34rem]" />
-                </li>
-                <li className="text-lg cursor-pointer hover:text-blue-500 ">
+                </Link>
+
+
+                <Link
+                  href={"/services"}
+                  className="text-lg cursor-pointer hover:text-blue-500 ">
                   Services
                   <hr className="w-[34rem]" />
-                </li>
-                <li className="text-lg cursor-pointer hover:text-blue-500 ">
+                </Link>
+                <Link
+                  href={"/about"}
+                  className="text-lg cursor-pointer hover:text-blue-500 ">
+                  About Us
+                  <hr className="w-[34rem]" />
+                </Link>
+                <Link
+                  href={"/contact"}
+                  className="text-lg cursor-pointer hover:text-blue-500 ">
                   Contact
                   <hr className="w-[34rem]" />
-                </li>
+                </Link>
               </ul>
             </div>
           )}

@@ -3,8 +3,8 @@ import { GoArrowRight } from "react-icons/go";
 
 const MemoriesSection = () => {
   return (
-    <div className="w-full h-full flex flex-col px-32">
-      <div className="flex justify-center gap-6">
+    <div className="w-full h-full flex flex-col px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+      <div className="flex flex-col sm:flex-row justify-center gap-6">
         <span className="relative">
           <Image
             src="/discount-img-4.jpg"
@@ -46,8 +46,8 @@ const MemoriesSection = () => {
       </div>
 
       {/* div for image and content */}
-      <div className="flex w-full h-full mt-24 gap-8 items-start">
-        <div className="left-div w-[50%] ">
+      <div className="flex flex-col sm:flex-row w-full h-full mt-24 gap-8 items-start">
+        <div className="left-div w-full sm:w-[50%] ">
           <Image
             src={"/memory-slider-img.jpg"}
             alt={"Memory"}
@@ -56,7 +56,7 @@ const MemoriesSection = () => {
             className="rounded-xl"
           />
         </div>
-        <div className="right-div w-[50%] flex flex-col">
+        <div className="right-div w-full sm:w-[50%] flex flex-col">
           <span
             className="flex items-center gap-4
                 bg-blue-50 p-2 rounded-full w-max
@@ -67,10 +67,10 @@ const MemoriesSection = () => {
               Travel`s Memories{" "}
             </p>
           </span>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-700 py-4 md:py-8 tracking-wide md:tracking-wider leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-700 py-4 md:py-8 tracking-wide md:tracking-wider leading-tight">
             Make Lasting Memories Around the World Tour
           </h1>
-          <p className="tracking-wide text-gray-700 text-lg text-wrap">
+          <p className="tracking-wide text-gray-700 text-base sm:text-lg text-wrap">
             We also believe in providing our travelers with unique and authentic
             experiences that you won&apos;t find in guidebooks or on standard
             tours.
@@ -84,11 +84,11 @@ const MemoriesSection = () => {
               {" "}
               Find Trips That Fit Your Flexible Lifestyle{" "}
             </h1>
-            <p className="tracking-wide text-gray-700 text-lg text-wrap">
+            <p className="tracking-wide text-gray-700 text-base sm:text-lg text-wrap">
               That&apos;s why we offer a range of tours that are designed to fit
               your flexible lifestyle.
             </p>
-            <hr className="w-[34rem] mt-4 bg-gray-700 h-0.5" />
+            <hr className="w-full sm:w-[34rem] mt-4 bg-gray-700 h-0.5" />
           </span>
 
           <span className="flex flex-col mt-4">
@@ -99,11 +99,11 @@ const MemoriesSection = () => {
               {" "}
               Expert-Guided Travel with Tourpalz{" "}
             </h1>
-            <p className="tracking-wide text-gray-700 text-lg text-wrap">
+            <p className="tracking-wide text-gray-700 text-base sm:text-lg text-wrap">
               we believe that travel should be a source of joy and inspiration,
               not stress & worry
             </p>
-            <hr className="w-[34rem] mt-4 bg-gray-700 h-0.5" />
+            <hr className="w-full sm:w-[34rem] mt-4 bg-gray-700 h-0.5" />
           </span>
 
           <span className="flex flex-col mt-4">
@@ -114,7 +114,7 @@ const MemoriesSection = () => {
               {" "}
               Discover the True Cost of Your Trip{" "}
             </h1>
-            <p className="tracking-wide text-gray-700 text-lg text-wrap">
+            <p className="tracking-wide text-gray-700 text-base sm:text-lg text-wrap">
               We believe that transparency is key to building trust with our
               travelers.
             </p>
@@ -123,7 +123,7 @@ const MemoriesSection = () => {
       </div>
 
       {/* Div for 4 spans */}
-      <div className="flex justify-center gap-24 my-12">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-8 my-12">
         <div className="span1 flex flex-col justify-center gap-2">
           <span className="w-40 h-40 rounded-full bg-blue-100 flex justify-center items-center">
             <Image

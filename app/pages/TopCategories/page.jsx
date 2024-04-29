@@ -4,7 +4,7 @@ import { GoArrowRight } from "react-icons/go";
 
 const TopCategories = () => {
   return (
-    <section className="flex flex-col w-full h-screen bg-gray-100 items-center py-20">
+    <section className="hidden md:flex flex-col w-full h-screen bg-gray-100 items-center py-20">
       <span
         className="flex items-center gap-4
                 bg-blue-50 p-2 rounded-full w-max
@@ -13,7 +13,7 @@ const TopCategories = () => {
         <GoArrowRight className="text-xl bg-blue-500 text-white rounded-full w-8 h-8 p-1 " />
         <p className="text-xl font-semibold text-blue-600">Top Categories</p>
       </span>
-      <h1 className="text-4xl font-bold text-center mt-6 text-wrap text-gray-700 text-center">
+      <h1 className="text-4xl font-bold mt-6 text-wrap text-gray-700 text-center">
         Discover the categories of <br /> tours
       </h1>
 

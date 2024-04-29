@@ -17,6 +17,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
   const [location, setLocation] = useState("");
+  const [language, setLanguage] = useState("");
+  const [price, setPrice] = useState("");
   const [profileType, setProfileType] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -59,7 +61,25 @@ const Register = () => {
     formData.append("location", location);
     formData.append("profileType", profileType);
     formData.append("profilePicture", profilePicture);
-    console.log(formData);
+    if (profileType === "tourGuide") {
+      formData.append("language", language);
+      formData.append("price", price);
+
+      axios.post("http://localhost:3001/register/guide", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      })
+        .then((response) => {
+          console.log(response.data);
+          toast.success("Tour Guide registered successfully");
+          router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      return;
+    }
 
     axios.post("http://localhost:3001/register", formData, {
       headers: {
@@ -219,6 +239,44 @@ const Register = () => {
                   </select>
                 </div>
               </div>
+
+              {/* Language */}
+              {profileType === "tourGuide" && (
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="language">
+                    Language
+                  </label>
+                  <div className="flex items-center border-b border-blue-500 py-2">
+                    <input
+                      className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                      type="text"
+                      placeholder="Language"
+                      id="language"
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Price */}
+              {profileType === "tourGuide" && (
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+                    Price
+                  </label>
+                  <div className="flex items-center border-b border-blue-500 py-2">
+                    <input
+                      className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                      type="text"
+                      placeholder="Price"
+                      id="price"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
 
 
               {/* Upload profile picture */}

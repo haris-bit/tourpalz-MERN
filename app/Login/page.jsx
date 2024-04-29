@@ -27,6 +27,23 @@ const LoginPage = () => {
     form.append("email", email);
     form.append("password", password);
     form.append("profileType", profileType);
+    if (profileType === "tourGuide") {
+      axios.post("http://localhost:3001/login/tour", form, {
+        headers: {
+          "Content-Type": 'application/json'
+        }
+      }).then((res) => {
+        if (res.data.error) {
+          toast.error("Invalid Credentials");
+        } else {
+          localStorage.setItem("email", email);
+          localStorage.setItem("profileType", profileType);
+          toast.success("Logged in successfully");
+          router.push("/TourGuideProfile");
+        }
+      });
+      return;
+    }
 
     axios.post("http://localhost:3001/login", form, {
       headers: {

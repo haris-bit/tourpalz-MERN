@@ -83,16 +83,16 @@ const CustomerSupport = () => {
     return (
         <div>
             <button onClick={toggleModal} className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500
-            
+            z-[1000]
             ">
                 <BsChatLeftDots size={20} />
             </button>
             {isOpen && (
-                <div className="fixed top-0 right-0 w-[500px] h-full flex items-center justify-center flex-wrap gap-4 z-[500]">
+                <div className="fixed top-0 right-0 w-full sm:w-[500px] h-full flex items-center justify-center flex-wrap gap-4 z-[500]">
                     <div className="bg-white p-8 rounded-lg shadow-lg">
                         <h2 className="text-xl font-bold mb-4">Customer Support</h2>
                         <p className="mb-4">Please enter your question below:</p>
-                        {/* {
+                        {
                             dummyQuestions.map((question, index) => (
                                 <button key={index} className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg mr-2 mb-2 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-500"
                                     onClick={(e) => setQuestion(e.target.textContent)}
@@ -100,7 +100,7 @@ const CustomerSupport = () => {
                                     {question}
                                 </button>
                             ))
-                        } */}
+                        }
                         <input
                             type="text"
                             className="w-full h-12 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:border-none focus:ring-blue-500 mt-4"
@@ -124,14 +124,14 @@ const CustomerSupport = () => {
                         {/* previous messages */}
                         {
                             messages.length === 0 ? (
-                                <div className="bg-white p-2 rounded-lg w-[450px]
+                                <div className="bg-white p-2 rounded-lg w-full sm:w-[450px]
                                 h-[300px] overflow-y-auto mt-4
                                 ">
                                     <p className="text-center text-gray-500">No previous messages</p>
                                 </div>
                             )
                                 : (
-                                    <div className="bg-white p-2 rounded-lg shadow-lg w-[460px]
+                                    <div className="bg-white p-2 rounded-lg shadow-lg w-full sm:w-[460px]
                         h-[300px] overflow-y-auto mt-4
                         ">
                                         <h2 className="text-xl font-bold my-4">Previous Messages</h2>
